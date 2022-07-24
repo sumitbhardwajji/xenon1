@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node
+  labels:
+    app: node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - name: node
+        image: docker.io/bhardwajji/nodejs
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /test
+          name: myvol
+      volumes:
+        - name: myvol
+          persistentVolumeClaim:
+            claimName: my-pvc
